@@ -8,11 +8,14 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import java.math.BigDecimal;
+import java.util.Date;
+
 
 @Data
 @Builder
 
 public class Fighter {
+    private Long id;
     @NotBlank
     private String name;
     @Max(100)
@@ -23,6 +26,8 @@ public class Fighter {
     @DecimalMax(value = "10.0", inclusive = true)
     private BigDecimal resistance;
     private Anime animeFrom;
+
+    private final Date createdAt = new Date();
 
     public enum Anime {
         NARUTO("Naruto"), BLEACH("Bleach"), ONE_PIECE("One Piece"), TEKKEN("Tekken");
