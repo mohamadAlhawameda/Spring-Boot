@@ -2,18 +2,15 @@ package com.cpan252.tekkenreborn;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
+import org.springframework.boot.CommandLineRunner;
+import com.cpan252.tekkenreborn.model.Fighter;
+import com.cpan252.tekkenreborn.model.Fighter.Anime;
 
-import com.cpan252.tekkenreborn.controller.HomeController;
+import java.math.BigDecimal;
 
-/**
- * mvn spring-boot:run does following steps
- * 1. mvn clean
- * 2. mvn compile
- * 3. mvn package
- * 4. java -jar target/tekkenreborn-0.0.1-SNAPSHOT.jar
- * 5. deploys jar to embedded tomcat
- */
+import org.springframework.context.annotation.Bean;
+import com.cpan252.tekkenreborn.repository.FighterRepository;
+
 @SpringBootApplication
 public class TekkenrebornApplication {
 
@@ -25,8 +22,41 @@ public class TekkenrebornApplication {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ApplicationContext context = SpringApplication.run(TekkenrebornApplication.class, args);
-		HomeController controller = context.getBean(HomeController.class);
+		SpringApplication.run(TekkenrebornApplication.class, args);
+
+	}
+
+	@Bean
+	public CommandLineRunner dataLoader(FighterRepository repository) {
+		return args -> {
+			repository.save(Fighter.builder()
+					.name("Heihachi Mishima")
+					.animeFrom(Anime.TEKKEN)
+					.damagePerHit(89)
+					.health(2500)
+					.resistance(new BigDecimal(0.5)).build());
+
+			repository.save(Fighter.builder()
+					.name("John")
+					.animeFrom(Anime.TEKKEN)
+					.damagePerHit(100)
+					.health(3000)
+					.resistance(new BigDecimal(0.5)).build());
+
+			repository.save(Fighter.builder()
+					.name("Jin Kazama")
+					.animeFrom(Anime.TEKKEN)
+					.damagePerHit(90)
+					.health(2200)
+					.resistance(new BigDecimal(0.5)).build());
+
+			repository.save(Fighter.builder()
+					.name("Steve Fox")
+					.animeFrom(Anime.TEKKEN)
+					.damagePerHit(80)
+					.health(25000)
+					.resistance(new BigDecimal(0.5)).build());
+		};
 	}
 
 }
